@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ Lý Sáng Tác Light Novel</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #90a4ae;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eceff1;
+        }
+        .novel-output {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .select-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='currentColor'%3e%3cpath d='M7 7l3 3 3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4a69bd',
+                        'soft-gray': '#f5f7fa',
+                        'text-dark': '#37474f',
+                        'danger-red': '#e74c3c',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-soft-gray min-h-screen p-4 sm:p-8 text-text-dark">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-primary-blue mb-2">
+                Trợ Lý Sáng Tác Light Novel
+            </h1>
+            <p class="text-lg text-gray-600">
+                Thiết lập vai trò: Tiểu thuyết gia chuyên viết chương hồi theo phong cách Nhật Bản.
+            </p>
+        </header>
+
+        <section id="input-section" class="bg-white p-6 rounded-xl shadow-2xl mb-8">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                <h2 class="text-2xl font-semibold text-primary-blue">
+                    Phiếu Tóm Tắt Chương Hồi
+                </h2>
+                <button id="clear-btn" class="text-sm text-white bg-danger-red hover:bg-red-600 px-3 py-1 rounded-full transition shadow-md">
+                    Xóa Toàn Bộ Dự Án
+                </button>
+            </div>
+
+            <!-- 1. Lore & Key Elements (Foundation) -->
+            <div class="mb-4">
+                <label for="foundation-elements" class="block text-sm font-bold text-gray-800 mb-1">
+                    1. Khung Cốt Truyện và Hệ Thống Vũ Trụ (Lore & Key Elements)
+                </label>
+                <p class="text-xs text-gray-500 mb-2">Cung cấp bối cảnh, nhân vật chính, nữ chính, và các thuật ngữ quan trọng để đảm bảo tính nhất quán.</p>
+                <textarea id="foundation-elements" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition resize-none" placeholder="Ví dụ: Tiền đề: Học sinh trung học bị dịch chuyển đến thế giới kiếm và phép thuật. Nhân vật chính: Kaito (Kỹ năng: Nấu Ăn Tối Thượng); Nữ chính: Lilith (Phù thủy tóc bạc); Đơn vị tiền tệ: Vàng."></textarea>
+            </div>
+            
+            <!-- 2. Stylistic Tone -->
+            <div class="mb-4">
+                <label for="tone" class="block text-sm font-bold text-gray-800 mb-1">
+                    2. Cảm Hứng Phong Cách (Stylistic Tone)
+                </label>
+                <p class="text-xs text-gray-500 mb-2">Lựa chọn cảm xúc và phong cách viết chủ đạo cho chương này.</p>
+                <select id="tone" class="select-custom w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition">
+                    <option value="Lãng mạn, nhẹ nhàng" selected>Lãng mạn, nhẹ nhàng (Sweet, Fluff)</option>
+                    <option value="Hồi hộp, gay cấn">Hồi hộp, gay cấn (Tension, Suspense)</option>
+                    <option value="Trầm lắng, nội tâm sâu sắc">Trầm lắng, nội tâm sâu sắc (Introspective, Melancholy)</option>
+                    <option value="Hành động, nhịp độ nhanh">Hành động, nhịp độ nhanh (Action, Fast-paced)</option>
+                    <option value="Hài hước, Slice of Life">Hài hước, Slice of Life (Comedy, Daily Life)</option>
+                    <option value="Bí ẩn, gợi mở">Bí ẩn, gợi mở (Mystery, Foreshadowing)</option>
+                </select>
+            </div>
+
+            <!-- 3. Preceding Context -->
+            <div class="mb-4">
+                <label for="context" class="block text-sm font-bold text-gray-800 mb-1">
+                    3. Bối Cảnh Tiếp Nối (Preceding Context)
+                </label>
+                <p class="text-xs text-gray-500 mb-2">Tóm tắt ngắn gọn những gì đã xảy ra ở cuối chương trước để AI tiếp tục mạch truyện.</p>
+                <textarea id="context" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition resize-none" placeholder="Ví dụ: Kaito vừa bị Lilith mời tham gia bang hội 'Ánh Trăng Câm Lặng'. Anh ta đang suy nghĩ về quyết định này."></textarea>
+            </div>
+            
+            <!-- 4. Chapter's Core Action -->
+            <div class="mb-6">
+                <label for="action" class="block text-sm font-bold text-gray-800 mb-1">
+                    4. Điểm Kịch Tính Chương Mới (Chapter's Core Action)
+                </label>
+                <p class="text-xs text-gray-500 mb-2">Sự kiện, quyết định, hoặc mâu thuẫn chính mà chương này phải giải quyết/khởi tạo.</p>
+                <textarea id="action" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-primary-blue focus:border-primary-blue transition resize-none" placeholder="Ví dụ: Kaito quyết định gia nhập và cả hai bắt đầu cuộc hành trình đầu tiên đến Làng Elf."></textarea>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generate-btn" class="w-full py-3 px-4 bg-primary-blue text-white font-bold rounded-lg shadow-lg hover:bg-blue-600 transition duration-300 transform hover:scale-[1.01] flex items-center justify-center disabled:bg-gray-400">
+                <svg id="spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="button-text">Sáng Tác Chương Hồi (Dài ~700 từ)</span>
+            </button>
+        </section>
+
+        <!-- Output Section -->
+        <section id="output-section" class="bg-white p-6 rounded-xl shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                <h2 class="text-2xl font-semibold text-primary-blue">
+                    Bản Nháp Chương Hồi
+                </h2>
+                <button id="copy-btn" class="text-sm text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded-full transition shadow-md">
+                    Sao chép bản nháp
+                </button>
+            </div>
+            
+            <div id="output-content" class="min-h-[200px] bg-soft-gray p-4 rounded-lg border border-gray-200 novel-output text-gray-800">
+                <p class="text-gray-500 italic">Nhấn "Sáng Tác Chương Hồi" để bắt đầu viết.</p>
+            </div>
+
+            <!-- Error/Info Message Box -->
+            <div id="message-box" class="mt-4 p-3 rounded-lg text-sm hidden"></div>
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        const foundationElementsInput = document.getElementById('foundation-elements');
+        const contextInput = document.getElementById('context');
+        const actionInput = document.getElementById('action');
+        const toneInput = document.getElementById('tone');
+
+        const generateBtn = document.getElementById('generate-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        
+        const outputContent = document.getElementById('output-content');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('button-text');
+        const messageBox = document.getElementById('message-box');
+
+        const FOUNDATION_KEY = 'novel_foundation';
+        const CONTEXT_KEY = 'novel_context';
+        const TONE_KEY = 'novel_tone';
+
+        function saveData() {
+            localStorage.setItem(FOUNDATION_KEY, foundationElementsInput.value.trim());
+            localStorage.setItem(CONTEXT_KEY, contextInput.value.trim());
+            localStorage.setItem(TONE_KEY, toneInput.value);
+        }
+
+        function loadSavedData() {
+            const savedFoundation = localStorage.getItem(FOUNDATION_KEY);
+            const savedContext = localStorage.getItem(CONTEXT_KEY);
+            const savedTone = localStorage.getItem(TONE_KEY);
+
+            if (savedFoundation) {
+                foundationElementsInput.value = savedFoundation;
+            }
+            if (savedContext) {
+                contextInput.value = savedContext;
+            }
+            if (savedTone) {
+                toneInput.value = savedTone;
+            }
+        }
+
+        function clearSavedData() {
+            localStorage.removeItem(FOUNDATION_KEY);
+            localStorage.removeItem(CONTEXT_KEY);
+            localStorage.removeItem(TONE_KEY);
+
+            foundationElementsInput.value = '';
+            contextInput.value = '';
+            actionInput.value = '';
+            toneInput.value = 'Hồi hộp, gay cấn';
+
+            showMessage("Đã xóa toàn bộ dữ liệu lưu trữ thành công.", 'success');
+        }
+        
+        function copyOutput() {
+            const textToCopy = outputContent.textContent.trim();
+            if (textToCopy === "" || textToCopy.includes("Nhấn \"Sáng Tác Chương Hồi\"")) {
+                showMessage("Không có nội dung để sao chép.", 'info');
+                return;
+            }
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showMessage("Đã sao chép nội dung chương vào clipboard!", 'success');
+            } catch (err) {
+                showMessage("Không thể sao chép tự động. Vui lòng sao chép thủ công.", 'error');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showMessage(text, type = 'info') {
+            messageBox.textContent = text;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700', 'bg-yellow-100', 'text-yellow-700');
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700');
+            } else {
+                messageBox.classList.add('bg-yellow-100', 'text-yellow-700');
+            }
+        }
+
+        async function generateNovelChapter() {
+            const foundation = foundationElementsInput.value.trim();
+            const context = contextInput.value.trim();
+            const tone = toneInput.value.trim();
+            const action = actionInput.value.trim();
+
+            if (!foundation || !context || !action || !tone) {
+                showMessage("Lỗi: Vui lòng điền đầy đủ cả 4 mục trong Phiếu Tóm Tắt Chương Hồi.", 'error');
+                return;
+            }
+
+            saveData(); 
+
+            generateBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            buttonText.textContent = 'Đang Tổng Hợp và Viết...';
+            outputContent.innerHTML = `<p class="text-gray-500 italic">Đang phân tích bối cảnh và viết chương hồi... (Quá trình có thể mất vài giây)</p>`;
+            messageBox.classList.add('hidden');
+
+            const systemPrompt = `Thiết lập vai trò: Tiểu thuyết gia chuyên viết Light Novel (Tiểu thuyết Nhật Bản) hiện đại. Bạn phải viết chương hồi bằng TIẾNG VIỆT, tuân thủ các nguyên tắc sau:
+            1. Độc Thoại Nội Tâm: Đi sâu vào cảm xúc, suy nghĩ, và góc nhìn của nhân vật chính. Dùng ngôn ngữ nội tâm (tự sự ngôi thứ ba giới hạn hoặc ngôi thứ nhất).
+            2. Chi Tiết Cảm Quan: Miêu tả môi trường, âm thanh, ánh sáng, hoặc mùi hương một cách tinh tế và gợi hình, phù hợp với TONE.
+            3. Nhịp Độ và Phong Cách: Điều chỉnh nhịp độ và phong cách viết để phù hợp với CẢM HỨNG PHONG CÁCH được cung cấp.
+            4. Đối Thoại: Giữ đối thoại ngắn gọn, thường sử dụng dấu ba chấm (...) để ám chỉ những điều chưa nói.
+            5. Cấu Trúc Dài Tập: Chương phải có một cao trào nhỏ và kết thúc bằng một "cú hích" (hook) hoặc gợi mở (foreshadowing) để khuyến khích độc giả đọc tiếp.
+            6. Độ dài: Viết một chương hoàn chỉnh dài khoảng 600 - 800 từ.
+            7. Thuật ngữ Giả tưởng (CRITICAL): Khi đặt tên Kỹ năng, Chủng tộc, Phép thuật, hoặc địa danh, KHÔNG sử dụng các từ dịch quá thô hoặc "phèn". Ưu tiên dùng các từ Hán Việt/Âm Hán (ví dụ: 'Thánh Kiếm', 'Quỷ Tộc') hoặc giữ nguyên tên gốc/phiên âm tiếng Anh/Nhật (ví dụ: 'Mana', 'Elf', 'Skill: Flash Step').
+            `;
+
+            const userQuery = `Dựa trên Phiếu Tóm Tắt Chương Hồi dưới đây, hãy sáng tác chương tiếp theo của tiểu thuyết.
+
+            ---
+            1. KHUNG CỐT TRUYỆN VÀ HỆ THỐNG VŨ TRỤ (FOUNDATION):
+            "${foundation}"
+            
+            2. CẢM HỨNG PHONG CÁCH (TONE):
+            "${tone}"
+
+            3. BỐI CẢNH TIẾP NỐI (CONTEXT):
+            "${context}"
+
+            4. ĐIỂM KỊCH TÍNH CHƯƠNG MỚI (CORE ACTION):
+            "${action}"
+            ---
+
+            Hãy bắt đầu chương bằng một dòng văn xuôi, không cần tiêu đề chương.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            const MAX_RETRIES = 5;
+            let currentDelay = 1000;
+
+            for (let i = 0; i < MAX_RETRIES; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && i < MAX_RETRIES - 1) {
+                            await new Promise(resolve => setTimeout(resolve, currentDelay));
+                            currentDelay *= 2;
+                            continue;
+                        }
+                        throw new Error(`Lỗi HTTP: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        outputContent.textContent = text;
+                        showMessage("Sáng tác chương hồi thành công! Hãy sao chép nội dung và sau đó cập nhật mục '3. Bối Cảnh Tiếp Nối' cho lần viết tiếp theo.", 'success');
+                    } else {
+                        throw new Error("Không nhận được nội dung từ AI. Vui lòng thử lại hoặc thay đổi prompt.");
+                    }
+                    break;
+
+                } catch (error) {
+                    if (i === MAX_RETRIES - 1) {
+                        outputContent.textContent = `[LỖI SÁNG TÁC] Đã xảy ra lỗi trong quá trình tạo nội dung: ${error.message}. Vui lòng kiểm tra lại prompt.`;
+                        showMessage("Lỗi kết nối hoặc API: " + error.message, 'error');
+                    }
+                }
+            }
+
+            generateBtn.disabled = false;
+            spinner.classList.add('hidden');
+            buttonText.textContent = 'Sáng Tác Chương Hồi (Dài ~700 từ)';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            
+            foundationElementsInput.addEventListener('input', saveData);
+            contextInput.addEventListener('input', saveData);
+            toneInput.addEventListener('change', saveData);
+
+            generateBtn.addEventListener('click', generateNovelChapter);
+            copyBtn.addEventListener('click', copyOutput);
+            clearBtn.addEventListener('click', clearSavedData);
+        });
+    </script>
+</body>
+</html>
